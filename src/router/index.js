@@ -21,7 +21,11 @@ const routes = [
       { path: '/order', name: 'order', component: () => import('../views/order/index.vue'), meta: { title: '订单管理' } },
       { path: '/banner', name: 'banner', component: () => import('../views/banner/index.vue'), meta: { title: 'Banner管理' } },
       { path: '/comment', name: 'comment', component: () => import('../views/comment/index.vue'), meta: { title: '评论管理' } },
-      { path: '/setting', name: 'setting', component: () => import('../views/setting/index.vue'), meta: { title: '系统设置' } }
+      { path: '/setting', name: 'setting', component: () => import('../views/setting/index.vue'), meta: { title: '系统设置' } },
+      { path: '/ai/conversations', name: 'ai-conversations', component: () => import('../views/ai/conversation/list.vue'), meta: { title: '会话管理' } },
+      { path: '/ai/conversations/:id', name: 'ai-conversation-detail', component: () => import('../views/ai/conversation/detail.vue'), meta: { title: '会话详情' } },
+      { path: '/ai/knowledge', name: 'ai-knowledge', component: () => import('../views/ai/knowledge/list.vue'), meta: { title: '知识库管理' } },
+      { path: '/ai/setting', name: 'ai-setting', component: () => import('../views/ai/setting.vue'), meta: { title: 'AI 设置' } }
     ]
   }
 ]

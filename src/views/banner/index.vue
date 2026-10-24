@@ -133,15 +133,15 @@ onMounted(load)
             <img :src="scope.row.image" class="banner-image" />
           </template>
         </el-table-column>
-        <el-table-column prop="title" label="标题" width="200" />
-        <el-table-column prop="sort" label="排序" width="80" />
-        <el-table-column label="状态" width="120">
+        <el-table-column prop="title" label="标题" min-width="200" />
+        <el-table-column prop="sort" label="排序" min-width="80" />
+        <el-table-column label="状态" min-width="120">
           <template #default="scope">
             <el-tag :type="scope.row.status === '已上线' ? 'success' : 'warning'">{{ scope.row.status }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="startTime" label="开始时间" width="150" />
-        <el-table-column prop="endTime" label="结束时间" width="150" />
+        <el-table-column prop="startTime" label="开始时间" min-width="150" />
+        <el-table-column prop="endTime" label="结束时间" min-width="150" />
         <el-table-column fixed="right" label="操作" width="180">
           <template #default="scope">
             <el-button type="primary" link @click="openEdit(scope.row)">编辑</el-button>

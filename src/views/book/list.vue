@@ -83,17 +83,17 @@ onMounted(async () => {
             <img :src="scope.row.cover" class="book-cover" />
           </template>
         </el-table-column>
-        <el-table-column prop="title" label="书名" width="180" />
-        <el-table-column prop="author" label="作者" width="140" />
-        <el-table-column prop="category" label="分类" width="120" />
-        <el-table-column prop="wordCount" label="字数" width="110" />
-        <el-table-column prop="chapterCount" label="章节数" width="110" />
-        <el-table-column label="状态" width="120">
+        <el-table-column prop="title" label="书名" min-width="180" />
+        <el-table-column prop="author" label="作者" min-width="140" />
+        <el-table-column prop="category" label="分类" min-width="120" />
+        <el-table-column prop="wordCount" label="字数" min-width="110" />
+        <el-table-column prop="chapterCount" label="章节数" min-width="110" />
+        <el-table-column label="状态" min-width="120">
           <template #default="scope">
             <el-tag :type="scope.row.status === '已完结' ? 'success' : 'primary'">{{ scope.row.status }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="rating" label="评分" width="90" />
+        <el-table-column prop="rating" label="评分" min-width="90" />
         <el-table-column fixed="right" label="操作" width="150">
           <template #default="scope">
             <el-button type="primary" link @click="handleEdit(scope.row)">编辑</el-button>

@@ -73,12 +73,12 @@ onMounted(fetchData)
             <img :src="scope.row.avatar" class="avatar" />
           </template>
         </el-table-column>
-        <el-table-column prop="nickname" label="昵称" width="120" />
-        <el-table-column prop="phone" label="手机号" width="160" />
-        <el-table-column prop="vipLevel" label="VIP等级" width="120" />
-        <el-table-column prop="balance" label="余额" width="100" />
-        <el-table-column prop="createdAt" label="注册时间" width="150" />
-        <el-table-column label="状态" width="120">
+        <el-table-column prop="nickname" label="昵称" min-width="120" />
+        <el-table-column prop="phone" label="手机号" min-width="160" />
+        <el-table-column prop="vipLevel" label="VIP等级" min-width="120" />
+        <el-table-column prop="balance" label="余额" min-width="100" />
+        <el-table-column prop="createdAt" label="注册时间" min-width="150" />
+        <el-table-column label="状态" min-width="120">
           <template #default="scope">
             <el-tag :type="scope.row.status === '正常' ? 'success' : 'info'">{{ scope.row.status }}</el-tag>
           </template>

@@ -83,10 +83,10 @@ onMounted(load)
 
     <el-card>
       <el-table :data="pageData" stripe>
-        <el-table-column prop="name" label="分类名" width="180" />
-        <el-table-column prop="icon" label="图标" width="120" />
-        <el-table-column prop="sort" label="排序" width="100" />
-        <el-table-column label="状态" width="120">
+        <el-table-column prop="name" label="分类名" min-width="180" />
+        <el-table-column prop="icon" label="图标" min-width="120" />
+        <el-table-column prop="sort" label="排序" min-width="100" />
+        <el-table-column label="状态" min-width="120">
           <template #default="scope">
             <el-tag :type="scope.row.status === '启用' ? 'success' : 'info'">{{ scope.row.status }}</el-tag>
           </template>

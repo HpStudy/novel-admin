@@ -47,18 +47,18 @@ onMounted(fetchData)
 
     <el-card>
       <el-table :data="tableData" v-loading="loading" stripe>
-        <el-table-column prop="id" label="订单号" width="180" />
-        <el-table-column prop="user" label="用户" width="110" />
-        <el-table-column prop="type" label="类型" width="120" />
-        <el-table-column prop="amount" label="金额" width="100" />
-        <el-table-column label="状态" width="120">
+        <el-table-column prop="id" label="订单号" min-width="180" />
+        <el-table-column prop="user" label="用户" min-width="110" />
+        <el-table-column prop="type" label="类型" min-width="120" />
+        <el-table-column prop="amount" label="金额" min-width="100" />
+        <el-table-column label="状态" min-width="120">
           <template #default="scope">
             <el-tag :type="scope.row.status === '已支付' ? 'success' : scope.row.status === '待支付' ? 'warning' : 'info'">
               {{ scope.row.status }}
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="paidAt" label="支付时间" width="180" />
+        <el-table-column prop="paidAt" label="支付时间" min-width="180" />
       </el-table>
 
       <div class="pagination-box">

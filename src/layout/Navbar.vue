@@ -21,10 +21,14 @@ const breadcrumbs = computed(() => {
     '/order': '订单管理',
     '/banner': 'Banner管理',
     '/comment': '评论管理',
+    '/ai/conversations': '会话管理',
+    '/ai/knowledge': '知识库管理',
+    '/ai/setting': 'AI 设置',
     '/setting': '系统设置'
   }
 
-  return [{ path, title: map[path] || '首页' }]
+  const title = map[path] || (path.startsWith('/ai/conversations/') ? '会话详情' : '首页')
+  return [{ path, title }]
 })
 
 const logout = () => {
