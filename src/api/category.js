@@ -59,8 +59,12 @@ export const saveCategory = async (payload) => {
   return { code: 0, message: '新增成功', data: item }
 }
 
-export const deleteCategory = async (id) => {
-  if (!isMockMode) return request.delete(`/categories/${id}`)
+export const deleteCategory = async (id, reassignTo) => {
+  if (!isMockMode) {
+    return request.delete(`/categories/${id}`, {
+      params: reassignTo ? { reassignTo } : undefined
+    })
+  }
 
   const categories = readMockList(storageKey, categoryList)
   const nextCategories = categories.filter((item) => item.id !== Number(id))

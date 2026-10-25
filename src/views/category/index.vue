@@ -11,6 +11,13 @@ const isEdit = ref(false)
 const saving = ref(false)
 const formRef = ref()
 const form = ref({ id: null, name: '', icon: '', sort: 1, status: '启用' })
+const deleteDialogVisible = ref(false)
+const deleteTarget = ref(null)
+const reassignTo = ref(null)
+const deleting = ref(false)
+const reassignOptions = computed(() =>
+  tableData.value.filter((item) => item.id !== deleteTarget.value?.id)
+)
 const rules = {
   name: [{ required: true, message: '请输入分类名', trigger: 'blur' }],
   status: [{ required: true, message: '请选择状态', trigger: 'change' }]
@@ -58,15 +65,40 @@ const submit = async () => {
   }
 }
 
+const performDelete = async (id, targetId) => {
+  deleting.value = true
+  try {
+    await deleteCategory(id, targetId)
+    ElMessage.success('删除成功')
+    deleteDialogVisible.value = false
+    await load()
+  } catch (error) {
+    ElMessage.error(error.message || '删除失败')
+  } finally {
+    deleting.value = false
+  }
+}
+
 const handleDelete = async (row) => {
   try {
     await ElMessageBox.confirm(`确认删除分类“${row.name}”吗？`, '删除确认', { type: 'warning' })
-    await deleteCategory(row.id)
-    ElMessage.success('删除成功')
-    await load()
-  } catch (error) {
-    if (error && error !== 'cancel') ElMessage.error('删除失败')
+  } catch {
+    return
   }
+
+  const bookCount = Number(row.bookCount) || 0
+  if (bookCount > 0) {
+    if (!reassignOptions.value.length) {
+      ElMessage.warning('该分类下还有书籍，请先新增其他分类用于转移')
+      return
+    }
+    deleteTarget.value = row
+    reassignTo.value = reassignOptions.value[0].id
+    deleteDialogVisible.value = true
+    return
+  }
+
+  await performDelete(row.id)
 }
 
 onMounted(load)
@@ -86,6 +118,7 @@ onMounted(load)
         <el-table-column prop="name" label="分类名" min-width="180" />
         <el-table-column prop="icon" label="图标" min-width="120" />
         <el-table-column prop="sort" label="排序" min-width="100" />
+        <el-table-column prop="bookCount" label="书籍数" min-width="100" />
         <el-table-column label="状态" min-width="120">
           <template #default="scope">
             <el-tag :type="scope.row.status === '启用' ? 'success' : 'info'">{{ scope.row.status }}</el-tag>
@@ -126,6 +159,21 @@ onMounted(load)
         <span class="dialog-footer">
           <el-button @click="dialogVisible = false">取消</el-button>
           <el-button type="primary" :loading="saving" @click="submit">确认</el-button>
+        </span>
+      </template>
+    </el-dialog>
+
+    <el-dialog v-model="deleteDialogVisible" title="转移并删除分类" width="520px">
+      <p style="margin: 0 0 12px; line-height: 1.6">
+        分类“{{ deleteTarget?.name }}”下还有 {{ deleteTarget?.bookCount }} 本书籍，删除后这些书籍将转移到以下分类：
+      </p>
+      <el-select v-model="reassignTo" style="width: 100%">
+        <el-option v-for="item in reassignOptions" :key="item.id" :label="item.name" :value="item.id" />
+      </el-select>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="deleteDialogVisible = false">取消</el-button>
+          <el-button type="danger" :loading="deleting" @click="performDelete(deleteTarget.id, reassignTo)">确认删除</el-button>
         </span>
       </template>
     </el-dialog>
