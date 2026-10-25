@@ -60,7 +60,6 @@ const submit = async () => {
           </el-button>
         </el-form-item>
       </el-form>
-      <div class="demo-hint">管理员账号：admin　密码：admin123</div>
     </div>
   </div>
 </template>
@@ -89,11 +88,5 @@ const submit = async () => {
   font-weight: 700;
   margin-bottom: 22px;
   color: #1f2937;
-}
-
-.demo-hint {
-  color: #909399;
-  font-size: 13px;
-  text-align: center;
 }
 </style>

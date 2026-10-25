@@ -64,8 +64,8 @@ const handleCoverBeforeUpload = (file) => {
     return false
   }
 
-  if (file.size > 1024 * 1024) {
-    ElMessage.error('图片大小不能超过 1MB')
+  if (file.size > 3 * 1024 * 1024) {
+    ElMessage.error('图片大小不能超过 3MB')
     return false
   }
 
