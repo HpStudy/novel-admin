@@ -77,6 +77,19 @@ export const saveChapter = async (payload) => {
 
 export const uploadChapters = async (payload) => {
   if (!isMockMode) {
+    const existing = await getChapters(payload.bookId, { page: 1, pageSize: 1000 })
+    const existingNumbers = new Set((existing.data.list || []).map((chapter) => Number(chapter.number)))
+    const seenNumbers = new Set()
+    const duplicates = []
+    payload.chapters.forEach((chapter) => {
+      const number = Number(chapter.number)
+      if (existingNumbers.has(number) || seenNumbers.has(number)) duplicates.push(chapter.number)
+      seenNumbers.add(number)
+    })
+    if (duplicates.length) {
+      throw new Error(`章节序号重复：${duplicates.join('、')}，请修改章节序号后再提交`)
+    }
+
     return request.post('/chapters/batch', {
       bookId: Number(payload.bookId),
       isFree: payload.isFree ? 1 : 0,
